@@ -2,8 +2,8 @@
 
 [![NPM Version][npm-image]][npm-url]
 
-[npm-image]: https://img.shields.io/npm/v/live-xxx.svg
-[npm-url]: https://npmjs.org/package/live-xxx
+[npm-image]: https://img.shields.io/npm/v/react-loading-screen-hoc
+[npm-url]: https://www.npmjs.com/package/react-loading-screen-hoc
 
 An HOC function `withLoadingScreen` that makes any components to display as a page loading screen.  
 In Next.js, the hoc function is assumed to be passed a component that will be exported in `_app.tsx`.  
