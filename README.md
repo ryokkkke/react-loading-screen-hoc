@@ -5,8 +5,8 @@
 [npm-image]: https://img.shields.io/npm/v/live-xxx.svg
 [npm-url]: https://npmjs.org/package/live-xxx
 
-An HOC function `withLoadingScreen` that makes any components to display as a page loading screen.
-In Next.js, the hoc function is assumed to be passed a component that will be exported in `_app.tsx`.
+An HOC function `withLoadingScreen` that makes any components to display as a page loading screen.  
+In Next.js, the hoc function is assumed to be passed a component that will be exported in `_app.tsx`.  
 Necessary types are included by default for TypeScript.
 
 ## Install
