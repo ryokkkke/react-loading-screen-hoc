@@ -1,7 +1,7 @@
 import React from "react";
 
 type LoadingScreenComponentProps = { isLoaded: boolean };
-type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
+export type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
 type LoadingScreenConfig = { limitMilliSecond?: number; debug?: boolean };
 
 const useIsomorphicLayoutEffect =

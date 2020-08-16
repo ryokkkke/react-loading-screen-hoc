@@ -23,5 +23,16 @@
   },
   "peerDependencies": {
     "react": ">=16.8"
-  }
+  },
+  "directories": {
+    "example": "examples"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryokkkke/react-loading-screen-hoc.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryokkkke/react-loading-screen-hoc/issues"
+  },
+  "homepage": "https://github.com/ryokkkke/react-loading-screen-hoc#readme"
 }

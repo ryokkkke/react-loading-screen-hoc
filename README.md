@@ -55,10 +55,12 @@ export default withLoadingScreen(MainComponent, LoadingScreenComponent, {
 
 That's it!
 
-- `withLoadingScreen` displays `LoadingScreenComponent` until finishing to load page.
+- `LoadingScreenComponent` has only one constraint of props that needs to have `isLoaded` property.
+- `withLoadingScreen` displays `LoadingScreenComponent` while loading page.
+  - To be precise, `isLoaded` will change to `true` when finishing loading so that you can control `LoadingScreenComponent` freely as you want.
+  - See `examples/loading-screen-component.tsx`.
 - uses `document.readyState` and `window.addEventListener("load", ~~~)` to validate whether a page finishes loading.
 - prevents to scroll while displaying `LoadingScreenComponent`.
-- `LoadingScreenComponent` has only one constraint of props that needs to have `isLoaded` property.
 
 ### Example for Next.js
 

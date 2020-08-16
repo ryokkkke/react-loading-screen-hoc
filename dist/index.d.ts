@@ -2,7 +2,7 @@ import React from "react";
 declare type LoadingScreenComponentProps = {
     isLoaded: boolean;
 };
-declare type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
+export declare type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
 declare type LoadingScreenConfig = {
     limitMilliSecond?: number;
     debug?: boolean;
