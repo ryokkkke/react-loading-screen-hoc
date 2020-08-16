@@ -14,7 +14,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.withLoadingScreen = void 0;
 var react_1 = __importDefault(require("react"));
 var useIsomorphicLayoutEffect = typeof window === "undefined" ? react_1.default.useEffect : react_1.default.useLayoutEffect;
 var hasBeenLoaded = function () {
@@ -81,4 +80,4 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
                 react_1.default.createElement(ChildrenComponent, __assign({}, props)))));
     };
 }
-exports.withLoadingScreen = withLoadingScreen;
+exports.default = withLoadingScreen;

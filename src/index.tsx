@@ -2,6 +2,7 @@ import React from "react";
 
 type LoadingScreenComponentProps = { isLoaded: boolean };
 type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
+type LoadingScreenConfig = { limitMilliSecond?: number; debug?: boolean };
 
 const useIsomorphicLayoutEffect =
   typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
@@ -12,10 +13,10 @@ const hasBeenLoaded = () => {
 };
 const preventEvent = (event: Event) => event.preventDefault();
 
-export function withLoadingScreen<CP>(
+function withLoadingScreen<CP>(
   ChildrenComponent: React.ComponentType<CP>,
   LoadingScreenComponent: LoadingScreenComponentType,
-  config?: { limitMilliSecond?: number; debug?: boolean }
+  config?: LoadingScreenConfig
 ): React.ComponentType<CP> {
   const sendDebugMessage = (message: string) => {
     if (config?.debug) console.log(message);
@@ -90,3 +91,5 @@ export function withLoadingScreen<CP>(
     );
   };
 }
+
+export default withLoadingScreen;

@@ -15,16 +15,10 @@
   "author": "ryokkkke",
   "license": "MIT",
   "devDependencies": {
-    "@types/classnames": "^2.2.10",
     "@types/node": "^14.0.27",
     "@types/react": "^16.9.46",
-    "classnames": "^2.2.6",
     "next": "^9.5.2",
     "react": "^16.13.1",
-    "stylelint": "^13.6.1",
-    "stylelint-config-recess-order": "^2.1.0",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-order": "^4.1.0",
     "typescript": "^3.9.7"
   },
   "peerDependencies": {
