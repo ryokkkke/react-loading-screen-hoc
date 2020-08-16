@@ -19,7 +19,7 @@ function withLoadingScreen<CP>(
   config?: LoadingScreenConfig
 ): React.ComponentType<CP> {
   const sendDebugMessage = (message: string) => {
-    if (config?.debug) console.log(message);
+    if (config?.debug) console.log(`react-loading-screen-hoc: ${message}`);
   };
 
   (() => {
@@ -27,15 +27,15 @@ function withLoadingScreen<CP>(
 
     if (typeof window == "undefined") return;
 
-    // この時点で既に読み込みが完了している場合は load イベントの監視不要
+    // if loading has already been completed at this point, it is not necessary to monitor the "load" event
     if (hasBeenLoaded()) return;
 
     window.addEventListener("load", () => {
-      sendDebugMessage('fired window "load" event!');
+      sendDebugMessage('window "load" event has been fired!');
       (document.querySelector("#loadingValidator") as HTMLDivElement)?.click();
     });
 
-    // ローディング画面表示中のスクロールを防ぐ
+    // prevent scrolling while the loading screen is displayed
     // SP
     window.addEventListener("touchmove", preventEvent, { passive: false });
     // PC
@@ -45,7 +45,7 @@ function withLoadingScreen<CP>(
   })();
 
   return (props: CP) => {
-    sendDebugMessage("fired render");
+    sendDebugMessage("fired render of wrapper component");
 
     const [isLoaded, setIsLoaded] = React.useState(false);
 
@@ -59,7 +59,7 @@ function withLoadingScreen<CP>(
     }, []);
 
     useIsomorphicLayoutEffect(() => {
-      sendDebugMessage("fired useIsomorphicLayoutEffect");
+      sendDebugMessage("fired useLayoutEffect");
 
       // 既にロードが完了している場合は dismiss する
       if (!isLoaded && hasBeenLoaded()) return dismissLoadingScreen();

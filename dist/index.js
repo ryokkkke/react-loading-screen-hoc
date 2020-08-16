@@ -25,21 +25,21 @@ var preventEvent = function (event) { return event.preventDefault(); };
 function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
     var sendDebugMessage = function (message) {
         if (config === null || config === void 0 ? void 0 : config.debug)
-            console.log(message);
+            console.log("react-loading-screen-hoc: " + message);
     };
     (function () {
         sendDebugMessage("window: " + typeof window);
         if (typeof window == "undefined")
             return;
-        // この時点で既に読み込みが完了している場合は load イベントの監視不要
+        // if loading has already been completed at this point, it is not necessary to monitor the "load" event
         if (hasBeenLoaded())
             return;
         window.addEventListener("load", function () {
             var _a;
-            sendDebugMessage('fired window "load" event!');
+            sendDebugMessage('window "load" event has been fired!');
             (_a = document.querySelector("#loadingValidator")) === null || _a === void 0 ? void 0 : _a.click();
         });
-        // ローディング画面表示中のスクロールを防ぐ
+        // prevent scrolling while the loading screen is displayed
         // SP
         window.addEventListener("touchmove", preventEvent, { passive: false });
         // PC
@@ -47,7 +47,7 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         sendDebugMessage("added event listeners");
     })();
     return function (props) {
-        sendDebugMessage("fired render");
+        sendDebugMessage("fired render of wrapper component");
         var _a = react_1.default.useState(false), isLoaded = _a[0], setIsLoaded = _a[1];
         var dismissLoadingScreen = react_1.default.useCallback(function () {
             sendDebugMessage("fired dismissLoadingScreen");
@@ -56,7 +56,7 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
             setIsLoaded(true);
         }, []);
         useIsomorphicLayoutEffect(function () {
-            sendDebugMessage("fired useIsomorphicLayoutEffect");
+            sendDebugMessage("fired useLayoutEffect");
             // 既にロードが完了している場合は dismiss する
             if (!isLoaded && hasBeenLoaded())
                 return dismissLoadingScreen();
