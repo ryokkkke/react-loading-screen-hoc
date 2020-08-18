@@ -39,7 +39,7 @@ function withLoadingScreen<CP>(
     // SP
     window.addEventListener("touchmove", preventEvent, { passive: false });
     // PC
-    window.addEventListener("mousewheel", preventEvent, { passive: false });
+    window.addEventListener("wheel", preventEvent, { passive: false });
 
     sendDebugMessage("added event listeners");
   })();
