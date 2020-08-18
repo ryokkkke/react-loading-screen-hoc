@@ -52,7 +52,7 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         var dismissLoadingScreen = react_1.default.useCallback(function () {
             sendDebugMessage("fired dismissLoadingScreen");
             window.removeEventListener("touchmove", preventEvent);
-            window.removeEventListener("mousewheel", preventEvent);
+            window.removeEventListener("wheel", preventEvent);
             setIsLoaded(true);
         }, []);
         useIsomorphicLayoutEffect(function () {

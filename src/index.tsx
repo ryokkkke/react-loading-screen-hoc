@@ -53,7 +53,7 @@ function withLoadingScreen<CP>(
       sendDebugMessage("fired dismissLoadingScreen");
 
       window.removeEventListener("touchmove", preventEvent);
-      window.removeEventListener("mousewheel", preventEvent);
+      window.removeEventListener("wheel", preventEvent);
 
       setIsLoaded(true);
     }, []);
