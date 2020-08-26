@@ -12,6 +12,13 @@ const hasBeenLoaded = () => {
   return document.readyState === "complete";
 };
 const preventEvent = (event: Event) => event.preventDefault();
+const preventScrolling = () => window && window.scrollTo(window.pageXOffset, window.pageYOffset);
+const isIeOrEdge = () => {
+  if (window == undefined) return false;
+
+  const ua = window.navigator.userAgent.toLowerCase();
+  return ua.indexOf("msie") != -1 || ua.indexOf("trident") != -1 || ua.indexOf("edg") != -1;
+};
 
 function withLoadingScreen<CP>(
   ChildrenComponent: React.ComponentType<CP>,
@@ -40,6 +47,8 @@ function withLoadingScreen<CP>(
     window.addEventListener("touchmove", preventEvent, { passive: false });
     // PC
     window.addEventListener("wheel", preventEvent, { passive: false });
+    // This is not an accurate solution, but "wheel" event is not fired when wheel by a trackpad on IE11 and Edge :(
+    if (isIeOrEdge()) window.addEventListener("scroll", preventScrolling, { passive: false });
 
     sendDebugMessage("added event listeners");
   })();
@@ -54,6 +63,7 @@ function withLoadingScreen<CP>(
 
       window.removeEventListener("touchmove", preventEvent);
       window.removeEventListener("wheel", preventEvent);
+      if (isIeOrEdge()) window.removeEventListener("scroll", preventScrolling);
 
       setIsLoaded(true);
     }, []);

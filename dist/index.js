@@ -22,6 +22,13 @@ var hasBeenLoaded = function () {
     return document.readyState === "complete";
 };
 var preventEvent = function (event) { return event.preventDefault(); };
+var preventScrolling = function () { return window && window.scrollTo(window.pageXOffset, window.pageYOffset); };
+var isIeOrEdge = function () {
+    if (window == undefined)
+        return false;
+    var ua = window.navigator.userAgent.toLowerCase();
+    return ua.indexOf("msie") != -1 || ua.indexOf("trident") != -1 || ua.indexOf("edg") != -1;
+};
 function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
     var sendDebugMessage = function (message) {
         if (config === null || config === void 0 ? void 0 : config.debug)
@@ -44,6 +51,9 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         window.addEventListener("touchmove", preventEvent, { passive: false });
         // PC
         window.addEventListener("wheel", preventEvent, { passive: false });
+        // This is not an accurate solution, but "wheel" event is not fired when wheel by a trackpad on IE11 and Edge :(
+        if (isIeOrEdge())
+            window.addEventListener("scroll", preventScrolling, { passive: false });
         sendDebugMessage("added event listeners");
     })();
     return function (props) {
@@ -53,6 +63,8 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
             sendDebugMessage("fired dismissLoadingScreen");
             window.removeEventListener("touchmove", preventEvent);
             window.removeEventListener("wheel", preventEvent);
+            if (isIeOrEdge())
+                window.removeEventListener("scroll", preventScrolling);
             setIsLoaded(true);
         }, []);
         useIsomorphicLayoutEffect(function () {
