@@ -63,7 +63,7 @@ function withLoadingScreen<CP>(
 
       window.removeEventListener("touchmove", preventEvent);
       window.removeEventListener("wheel", preventEvent);
-      if (isIeOrEdge()) window.removeEventListener("scroll", preventScrolling);
+      window.removeEventListener("scroll", preventScrolling);
 
       setIsLoaded(true);
     }, []);
