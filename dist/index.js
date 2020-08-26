@@ -15,15 +15,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var react_1 = __importDefault(require("react"));
-var useIsomorphicLayoutEffect = typeof window === "undefined" ? react_1.default.useEffect : react_1.default.useLayoutEffect;
+var isBrowser = typeof window !== "undefined";
+var useIsomorphicLayoutEffect = isBrowser ? react_1.default.useLayoutEffect : react_1.default.useEffect;
 var hasBeenLoaded = function () {
-    if (typeof document === "undefined")
+    if (!isBrowser)
         return false;
     return document.readyState === "complete";
 };
 var preventEvent = function (event) { return event.preventDefault(); };
-var preventScrolling = function () { return window && window.scrollTo(window.pageXOffset, window.pageYOffset); };
-var userAgent = window === null || window === void 0 ? void 0 : window.navigator.userAgent.toLowerCase();
+var preventScrolling = function () { return isBrowser && window.scrollTo(window.pageXOffset, window.pageYOffset); };
+var userAgent = isBrowser ? window.navigator.userAgent.toLowerCase() : undefined;
 var isIe = function () {
     if (userAgent == undefined)
         return false;
@@ -42,7 +43,7 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
     };
     (function () {
         sendDebugMessage("window: " + typeof window);
-        if (typeof window == "undefined")
+        if (!isBrowser)
             return;
         // if loading has already been completed at this point, it is not necessary to monitor the "load" event
         if (hasBeenLoaded())

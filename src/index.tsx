@@ -4,16 +4,16 @@ type LoadingScreenComponentProps = { isLoaded: boolean };
 export type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
 type LoadingScreenConfig = { limitMilliSecond?: number; debug?: boolean };
 
-const useIsomorphicLayoutEffect =
-  typeof window === "undefined" ? React.useEffect : React.useLayoutEffect;
+const isBrowser = typeof window !== "undefined";
+const useIsomorphicLayoutEffect = isBrowser ? React.useLayoutEffect : React.useEffect;
 const hasBeenLoaded = () => {
-  if (typeof document === "undefined") return false;
+  if (!isBrowser) return false;
 
   return document.readyState === "complete";
 };
 const preventEvent = (event: Event) => event.preventDefault();
-const preventScrolling = () => window && window.scrollTo(window.pageXOffset, window.pageYOffset);
-const userAgent = window?.navigator.userAgent.toLowerCase();
+const preventScrolling = () => isBrowser && window.scrollTo(window.pageXOffset, window.pageYOffset);
+const userAgent = isBrowser ? window.navigator.userAgent.toLowerCase() : undefined;
 const isIe = () => {
   if (userAgent == undefined) return false;
 
@@ -38,7 +38,7 @@ function withLoadingScreen<CP>(
   (() => {
     sendDebugMessage(`window: ${typeof window}`);
 
-    if (typeof window == "undefined") return;
+    if (!isBrowser) return;
 
     // if loading has already been completed at this point, it is not necessary to monitor the "load" event
     if (hasBeenLoaded()) return;
