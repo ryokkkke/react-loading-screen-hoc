@@ -13,12 +13,18 @@ const hasBeenLoaded = () => {
 };
 const preventEvent = (event: Event) => event.preventDefault();
 const preventScrolling = () => window && window.scrollTo(window.pageXOffset, window.pageYOffset);
-const isIeOrEdge = () => {
-  if (window == undefined) return false;
+const userAgent = window?.navigator.userAgent.toLowerCase();
+const isIe = () => {
+  if (userAgent == undefined) return false;
 
-  const ua = window.navigator.userAgent.toLowerCase();
-  return ua.indexOf("msie") != -1 || ua.indexOf("trident") != -1 || ua.indexOf("edg") != -1;
+  return userAgent.indexOf("msie") != -1 || userAgent.indexOf("trident") != -1;
 };
+const isEdge = () => {
+  if (userAgent == undefined) return false;
+
+  return userAgent.indexOf("edg") != -1;
+};
+const isIeOrEdge = () => isIe() || isEdge();
 
 function withLoadingScreen<CP>(
   ChildrenComponent: React.ComponentType<CP>,
@@ -61,9 +67,11 @@ function withLoadingScreen<CP>(
     const dismissLoadingScreen = React.useCallback(() => {
       sendDebugMessage("fired dismissLoadingScreen");
 
-      window.removeEventListener("touchmove", preventEvent, true);
-      window.removeEventListener("wheel", preventEvent, true);
-      if (isIeOrEdge()) window.removeEventListener("scroll", preventScrolling, true);
+      // true is necessary for the third argument to remove a `{ passive: false }` event listener on IE11,
+      // and false is necessary on other Browsers.
+      window.removeEventListener("touchmove", preventEvent, isIe());
+      window.removeEventListener("wheel", preventEvent, isIe());
+      if (isIeOrEdge()) window.removeEventListener("scroll", preventScrolling, isIe());
 
       setIsLoaded(true);
     }, []);

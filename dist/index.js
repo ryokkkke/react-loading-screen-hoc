@@ -23,12 +23,18 @@ var hasBeenLoaded = function () {
 };
 var preventEvent = function (event) { return event.preventDefault(); };
 var preventScrolling = function () { return window && window.scrollTo(window.pageXOffset, window.pageYOffset); };
-var isIeOrEdge = function () {
-    if (window == undefined)
+var userAgent = window === null || window === void 0 ? void 0 : window.navigator.userAgent.toLowerCase();
+var isIe = function () {
+    if (userAgent == undefined)
         return false;
-    var ua = window.navigator.userAgent.toLowerCase();
-    return ua.indexOf("msie") != -1 || ua.indexOf("trident") != -1 || ua.indexOf("edg") != -1;
+    return userAgent.indexOf("msie") != -1 || userAgent.indexOf("trident") != -1;
 };
+var isEdge = function () {
+    if (userAgent == undefined)
+        return false;
+    return userAgent.indexOf("edg") != -1;
+};
+var isIeOrEdge = function () { return isIe() || isEdge(); };
 function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
     var sendDebugMessage = function (message) {
         if (config === null || config === void 0 ? void 0 : config.debug)
@@ -61,10 +67,12 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         var _a = react_1.default.useState(false), isLoaded = _a[0], setIsLoaded = _a[1];
         var dismissLoadingScreen = react_1.default.useCallback(function () {
             sendDebugMessage("fired dismissLoadingScreen");
-            window.removeEventListener("touchmove", preventEvent, true);
-            window.removeEventListener("wheel", preventEvent, true);
+            // true is necessary for the third argument to remove a `{ passive: false }` event listener on IE11,
+            // and false is necessary on other Browsers.
+            window.removeEventListener("touchmove", preventEvent, isIe());
+            window.removeEventListener("wheel", preventEvent, isIe());
             if (isIeOrEdge())
-                window.removeEventListener("scroll", preventScrolling, true);
+                window.removeEventListener("scroll", preventScrolling, isIe());
             setIsLoaded(true);
         }, []);
         useIsomorphicLayoutEffect(function () {
