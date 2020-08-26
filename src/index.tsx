@@ -61,9 +61,9 @@ function withLoadingScreen<CP>(
     const dismissLoadingScreen = React.useCallback(() => {
       sendDebugMessage("fired dismissLoadingScreen");
 
-      window.removeEventListener("touchmove", preventEvent);
-      window.removeEventListener("wheel", preventEvent);
-      window.removeEventListener("scroll", preventScrolling);
+      window.removeEventListener("touchmove", preventEvent, true);
+      window.removeEventListener("wheel", preventEvent, true);
+      if (isIeOrEdge()) window.removeEventListener("scroll", preventScrolling, true);
 
       setIsLoaded(true);
     }, []);

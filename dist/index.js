@@ -61,9 +61,10 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         var _a = react_1.default.useState(false), isLoaded = _a[0], setIsLoaded = _a[1];
         var dismissLoadingScreen = react_1.default.useCallback(function () {
             sendDebugMessage("fired dismissLoadingScreen");
-            window.removeEventListener("touchmove", preventEvent);
-            window.removeEventListener("wheel", preventEvent);
-            window.removeEventListener("scroll", preventScrolling);
+            window.removeEventListener("touchmove", preventEvent, true);
+            window.removeEventListener("wheel", preventEvent, true);
+            if (isIeOrEdge())
+                window.removeEventListener("scroll", preventScrolling, true);
             setIsLoaded(true);
         }, []);
         useIsomorphicLayoutEffect(function () {
