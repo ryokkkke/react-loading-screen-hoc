@@ -94,10 +94,10 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
             return function () { return clearTimeout(timer); };
         }, [isLoaded, dismissLoadingScreen]);
         return (react_1.default.createElement(react_1.default.Fragment, null,
-            react_1.default.createElement("div", { style: { position: "relative", "zIndex": 5 } },
+            react_1.default.createElement("div", { className: "reactLoadingScreenHoc-loadingScreenWrapper", style: { position: "relative", "zIndex": 5 } },
                 react_1.default.createElement("div", { id: "loadingValidator", onClick: dismissLoadingScreen }),
                 react_1.default.createElement(LoadingScreenComponent, { isLoaded: isLoaded })),
-            react_1.default.createElement("div", { style: { position: "relative", "zIndex": 1 } },
+            react_1.default.createElement("div", { className: "reactLoadingScreenHoc-mainContentsWrapper", style: { position: "relative", "zIndex": 1 } },
                 react_1.default.createElement(ChildrenComponent, __assign({}, props, { isLoaded: isLoaded })))));
     };
 }

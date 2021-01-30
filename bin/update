@@ -5,6 +5,8 @@ set -eu
 new_version=$1
 new_version_tag="v$new_version"
 
+npm run build
+
 # TODO: package.jsonを変更する処理
 
 diff=$(git diff --name-only)
