@@ -60,6 +60,7 @@ export default withLoadingScreen(MainComponent, LoadingScreenComponent, {
 - ロード完了するまで SP、PC ともにスクロールを防ぎます。
 - `LoadingScreenComponent` として渡すコンポーネントは、 `isLoaded` （ロード完了したら`true`になる）というプロパティを持った props を受け取ることができる必要があります。
   - `LoadingScreenComponent` の表示/非表示はこの `isLoaded` を元に実装してください。
+  - `MainComponent`にも`isLoaded`が渡されるので、任意で使用できます。
 
 ### Example for Next.js
 

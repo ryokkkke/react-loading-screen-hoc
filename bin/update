@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -eu
+
+new_version=$1
+new_version_tag="v$new_version"
+
+# TODO: package.jsonを変更する処理
+
+diff=$(git diff --name-only)
+
+if [ "$diff" != "package.json" ]; then
+  echo "there are changes other than package.json"
+  exit 1
+fi
+
+git add .
+git commit -m "update to $new_version_tag"
+
+npm publish
+
+git push origin master
+
+git tag $new_version_tag
+git push origin $new_version_tag

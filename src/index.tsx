@@ -1,7 +1,7 @@
 import React from "react";
 
-type LoadingScreenComponentProps = { isLoaded: boolean };
-export type LoadingScreenComponentType = React.ComponentType<LoadingScreenComponentProps>;
+type LoadingProps = { isLoaded: boolean };
+export type LoadingScreenComponentType = React.ComponentType<LoadingProps>;
 type LoadingScreenConfig = { limitMilliSecond?: number; debug?: boolean };
 
 const isBrowser = typeof window !== "undefined";
@@ -26,8 +26,8 @@ const isEdge = () => {
 };
 const isIeOrEdge = () => isIe() || isEdge();
 
-function withLoadingScreen<CP>(
-  ChildrenComponent: React.ComponentType<CP>,
+function withLoadingScreen<CP extends {}>(
+  ChildrenComponent: React.ComponentType<CP & Partial<LoadingProps>>,
   LoadingScreenComponent: LoadingScreenComponentType,
   config?: LoadingScreenConfig
 ): React.ComponentType<CP> {
@@ -79,13 +79,13 @@ function withLoadingScreen<CP>(
     useIsomorphicLayoutEffect(() => {
       sendDebugMessage("fired useLayoutEffect");
 
-      // 既にロードが完了している場合は dismiss する
+      // dismiss a loading screen when already finished loading
       if (!isLoaded && hasBeenLoaded()) return dismissLoadingScreen();
 
       if (config?.limitMilliSecond == undefined) return;
       if (hasBeenLoaded()) return;
 
-      // 最悪 ${config.limit}ms でローディング画面を消す
+      // dismiss a loading screen at least after ${config.limit} ms
       const timer = setTimeout(() => {
         sendDebugMessage(`elapsed ${config.limitMilliSecond} ms`);
         dismissLoadingScreen();
@@ -103,7 +103,7 @@ function withLoadingScreen<CP>(
         </div>
 
         <div style={{ position: "relative", "zIndex": 1 }}>
-          <ChildrenComponent {...props} />
+          <ChildrenComponent {...props} isLoaded={isLoaded} />
         </div>
       </>
     );

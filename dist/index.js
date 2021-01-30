@@ -78,14 +78,14 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
         }, []);
         useIsomorphicLayoutEffect(function () {
             sendDebugMessage("fired useLayoutEffect");
-            // 既にロードが完了している場合は dismiss する
+            // dismiss a loading screen when already finished loading
             if (!isLoaded && hasBeenLoaded())
                 return dismissLoadingScreen();
             if ((config === null || config === void 0 ? void 0 : config.limitMilliSecond) == undefined)
                 return;
             if (hasBeenLoaded())
                 return;
-            // 最悪 ${config.limit}ms でローディング画面を消す
+            // dismiss a loading screen at least after ${config.limit} ms
             var timer = setTimeout(function () {
                 sendDebugMessage("elapsed " + config.limitMilliSecond + " ms");
                 dismissLoadingScreen();
@@ -98,7 +98,7 @@ function withLoadingScreen(ChildrenComponent, LoadingScreenComponent, config) {
                 react_1.default.createElement("div", { id: "loadingValidator", onClick: dismissLoadingScreen }),
                 react_1.default.createElement(LoadingScreenComponent, { isLoaded: isLoaded })),
             react_1.default.createElement("div", { style: { position: "relative", "zIndex": 1 } },
-                react_1.default.createElement(ChildrenComponent, __assign({}, props)))));
+                react_1.default.createElement(ChildrenComponent, __assign({}, props, { isLoaded: isLoaded })))));
     };
 }
 exports.default = withLoadingScreen;

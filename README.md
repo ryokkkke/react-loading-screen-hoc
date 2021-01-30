@@ -9,6 +9,8 @@ An HOC function `withLoadingScreen` that makes any components to display as a pa
 In Next.js, the hoc function is assumed to be passed a component that will be exported in `_app.tsx`.  
 Necessary types are included by default for TypeScript.
 
+Compatible with Chrome, FireFox, Safari, Edge, IE11.
+
 ## Install
 
 ```bash
@@ -56,6 +58,7 @@ export default withLoadingScreen(MainComponent, LoadingScreenComponent, {
 That's it!
 
 - `LoadingScreenComponent` has only one constraint of props that needs to have `isLoaded` property.
+  - `MainComponent` also be passed optional `isLoaded` props.
 - `withLoadingScreen` displays `LoadingScreenComponent` while loading page.
   - To be precise, `isLoaded` will change to `true` when finishing loading so that you can control `LoadingScreenComponent` freely as you want.
   - See `examples/loading-screen-component.tsx`.
