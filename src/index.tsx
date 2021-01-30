@@ -97,12 +97,18 @@ function withLoadingScreen<CP extends {}>(
 
     return (
       <>
-        <div style={{ position: "relative", "zIndex": 5 }}>
+        <div
+          className="reactLoadingScreenHoc-loadingScreenWrapper"
+          style={{ position: "relative", "zIndex": 5 }}
+        >
           <div id="loadingValidator" onClick={dismissLoadingScreen} />
           <LoadingScreenComponent isLoaded={isLoaded} />
         </div>
 
-        <div style={{ position: "relative", "zIndex": 1 }}>
+        <div
+          className="reactLoadingScreenHoc-mainContentsWrapper"
+          style={{ position: "relative", "zIndex": 1 }}
+        >
           <ChildrenComponent {...props} isLoaded={isLoaded} />
         </div>
       </>
